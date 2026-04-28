@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+
+        <div class="authButtons">
+            <button onclick="showForm('login')">Login</button>
+            <button onclick="showForm('signup')">Sign Up</button>
+        </div>
+
+
+        <div id = loginForm class="formContainer">
+            <form action="{{ url_for('login') }}" method="post">
+                <h2>Login</h2>
+
+                <label for="uname"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="uname" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+
+                <button type="submit">Login</button>
+                <label>
+            </form>
+        </div>
+
+        <div id = signupForm class="formContainer">
+            <form action="{{ url_for('signup') }}" method="post">
+                <h2>Create Account</h2>
+
+                <label for="uname"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="uname" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+
+                <button type="submit">Create Account</button>
+                <label>
+            </form>
+        </div>
+
+        <script>
+        function showForm(type) {
+            document.getElementById("loginForm");
+            document.getElementById("signupForm");
+
+            if (type === "login") {
+                document.getElementById("loginForm");
+            } else {
+                document.getElementById("signupForm");
+            }
+        }
+        </script>
+{% endblock %}
