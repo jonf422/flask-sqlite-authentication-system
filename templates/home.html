@@ -4,6 +4,9 @@
         <div class="authButtons">
             <button onclick="showForm('login')">Login</button>
             <button onclick="showForm('signup')">Sign Up</button>
+            {% if error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
         </div>
 
 
@@ -39,14 +42,11 @@
 
         <script>
         function showForm(type) {
-            document.getElementById("loginForm");
-            document.getElementById("signupForm");
+            document.getElementById("loginForm").classList.remove("visible");
+            document.getElementById("signupForm").classList.remove("visible");
 
-            if (type === "login") {
-                document.getElementById("loginForm");
-            } else {
-                document.getElementById("signupForm");
-            }
+            document.getElementById(type === "login" ? "loginForm" : "signupForm")
+                .classList.add("visible");
         }
         </script>
 {% endblock %}

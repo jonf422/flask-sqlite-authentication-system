@@ -14,10 +14,10 @@ def login():
     uname = request.form.get('uname')
     psw = request.form.get('psw')
 
-    #TODO: authenticate user
-    print(f'User logged in with username: {uname}, pass: {psw}')
-
-    return redirect(url_for('home'))
+    success, message = db.verify_user(uname, psw)
+    if success:
+        return render_template('home.html', error=message, loggedIn=success)
+    return render_template('home.html', error=message)
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -27,12 +27,8 @@ def signup():
     success, message = db.reg_user(uname, psw)
     print(message)
     if success:
-        return redirect(url_for('loggedIn'))
+        return render_template('home.html', error=message, loggedIn=success)
     return render_template('home.html', error=message)
-
-@app.route('/loggedIn')
-def loggedIn():
-    return(render_template('loggedIn.html'))
 
 if __name__ == '__main__':
     app.run()

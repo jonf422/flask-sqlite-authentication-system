@@ -1,0 +1,76 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    background-color: #BEC5AD;
+    color: #34252F;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.labInfo {
+    background-color: #519872;
+    color: #e0e0e0;
+    padding: 16px 24px;
+}
+
+
+/* ── Main content ────────────────────────────────────── */
+#content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 16px;
+    gap: 24px;
+}
+
+/* ── Auth toggle buttons ─────────────────────────────── */
+.authButtons {
+    display: flex;
+    gap: 8px;
+}
+
+.authButtons button {
+    padding: 8px 24px;
+    border: 2px solid #1a1a2e;
+    color: #1a1a2e;
+}
+
+
+/* ── Forms ───────────────────────────────────────────── */
+.formContainer {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 32px;
+    width: 100%;
+    max-width: 380px;
+    display: none;
+}
+
+.formContainer.visible {
+    display: block;
+}
+
+
+/* ── Error message ───────────────────────────────────── */
+.error {
+    color: #b00020;
+    font-size: 0.875rem;
+    margin-bottom: 12px;
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+footer {
+    background-color: #519872;
+    color: #BEC5AD;
+    text-align: center;
+    padding: 16px;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}

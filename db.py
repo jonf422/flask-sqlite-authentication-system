@@ -89,14 +89,14 @@ class Db:
         #hash plain pw
         pw_hash = self.hash_pw(plain_pw)
 
-        sql = '''INSERT INTO users (username, password_hash, access_level) VALUES (?, ?, ?);'''
+        sql = 'INSERT INTO users (username, password_hash, access_level) VALUES (?, ?, ?);'
 
         #execute sql
         conn = self.get_connection()
         if not conn:
             return False
         try:
-            conn.execute(sql, (uname, pw_hash, ACCESS_LVL_STANDARD))
+            conn.execute(sql, (uname, pw_hash, ACCESS_LVL_LIMIED))
             conn.commit()
             return True, ''
         except sqlite3.Error:
@@ -107,14 +107,55 @@ class Db:
     def verify_user(self, uname, plain_pw):
         #TODO: user verification given username and plaintext password
         # should add to log in attempts/lock account
+        conn = self.get_connection()
+        if not conn:
+            return False, 'Could not connect to database'
         
+        try:
+            cur = conn.cursor()
+            sql = 'SELECT * FROM users WHERE username = ?;'
+            row = cur.execute(sql, (uname,)).fetchone()
+            print(row)
+            if row == None: #Username not found
+                return False, 'Invalid username or password'
+
+            if row[5]: #Account exists but is locked
+                return False, 'Account locked. Contact an administrator'
+            
+            #Account exists
+            if self.verify_pw(plain_pw, row[2]): #Verify password
+                cur.execute('UPDATE users SET failed_attempts = 0 WHERE username = ?;', (uname,))
+                conn.commit()
+                return True, ''
+            
+            #password incorrect
+            new_attempts = row[4] + 1
+            if new_attempts >= 3: #lock account
+                cur.execute(
+                    'UPDATE users SET failed_attempts = ?, locked = 1 WHERE username = ?;',
+                    (new_attempts, uname)
+                )
+                conn.commit()
+                return False, 'Account locked. Please contact an administrator'
+
+            cur.execute( #update attempts
+                'UPDATE users SET failed_attempts = ? WHERE username = ?;',
+                (new_attempts, uname)
+            )
+            conn.commit()
+            remaining = 3 - new_attempts
+            return False, f'Invalid username or password.'
+        except sqlite3.Error:
+            return False, 'Database error occurred'
+        finally:
+            conn.close()
 
     def populate_users(self):
         users = (['userA', 'userApass3!', ACCESS_LVL_ADMIN],
                  ['userB', 'userBpass2!', ACCESS_LVL_STANDARD],
                  ['userC', 'userCpass1!', ACCESS_LVL_LIMIED])
         
-        sql = '''INSERT INTO users (username, password_hash, access_level) values (?,?,?)'''
+        sql = 'INSERT INTO users (username, password_hash, access_level) values (?,?,?)'
         conn = self.get_connection()
         if not conn:
             return False
