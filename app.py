@@ -30,5 +30,11 @@ def signup():
         return render_template('home.html', error=message, loggedIn=success)
     return render_template('home.html', error=message)
 
+@app.route('/gen_pw')
+def gen_pw():
+    pw = db.gen_strong_pw()
+    return render_template('home.html', strong_pw = pw)
+
+
 if __name__ == '__main__':
     app.run()

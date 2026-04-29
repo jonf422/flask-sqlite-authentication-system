@@ -2,6 +2,7 @@ import os
 import sqlite3
 import re
 import hashlib
+import random
 
 DB_PATH = 'users.db'
 
@@ -145,10 +146,33 @@ class Db:
             conn.commit()
             remaining = 3 - new_attempts
             return False, f'Invalid username or password.'
+        
         except sqlite3.Error:
             return False, 'Database error occurred'
         finally:
             conn.close()
+
+    def gen_strong_pw(self):
+
+        uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        lowercase = 'abcdefghijklmnopqrstuvwxyz'
+        digits    = '0123456789'
+        special   = "!@#$%^&*()-_=+[]{}|;:',.<>?/`~"
+
+        # guarantee at least one from each required category
+        required = [
+            random.choice(uppercase),
+            random.choice(lowercase),
+            random.choice(digits),
+            random.choice(special),
+        ]
+
+        all_chars = uppercase + lowercase + digits + special
+        rest = [random.choice(all_chars) for i in range(STRONG_PW_LEN - len(required))]
+
+        pw_list = required + rest
+        random.shuffle(pw_list)
+        return ''.join(pw_list)
 
     def populate_users(self):
         users = (['userA', 'userApass3!', ACCESS_LVL_ADMIN],
