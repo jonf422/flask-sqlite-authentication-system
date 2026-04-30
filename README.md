@@ -34,4 +34,4 @@ After initializing the database, runn app.py to start the Flask app and navigate
 - https://en.fmyly.com/article/where-does-nav-go-in-html/
 - https://flask.palletsprojects.com/en/stable/quickstart/
 - https://docs.python.org/3/library/hashlib.html
-- Code from cs-2660-catamount-community-bank
+- Code from cs-2660-catamount-community-bank - Professor Jim Eddy
