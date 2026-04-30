@@ -173,6 +173,19 @@ class Db:
         pw_list = required + rest
         random.shuffle(pw_list)
         return ''.join(pw_list)
+    
+    def get_user(self, uname):
+        conn = self.get_connection()
+        if not conn:
+            return None
+        try:
+            cur = conn.cursor()
+            sql = 'SELECT * FROM users WHERE username = ?;'
+            return conn.execute(sql, (uname,)).fetchone()
+        except sqlite3.Error:
+            return None
+        finally:
+                conn.close()
 
     def populate_users(self):
         users = (['userA', 'userApass3!', ACCESS_LVL_ADMIN],

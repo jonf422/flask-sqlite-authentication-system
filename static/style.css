@@ -20,7 +20,7 @@ body {
 }
 
 
-/* ── Main content ────────────────────────────────────── */
+/*Main*/
 #content {
     flex: 1;
     display: flex;
@@ -30,7 +30,7 @@ body {
     gap: 24px;
 }
 
-/* ── Auth toggle buttons ─────────────────────────────── */
+/*Auth toggle buttons*/
 .authButtons {
     display: flex;
     gap: 8px;
@@ -43,7 +43,7 @@ body {
 }
 
 
-/* ── Forms ───────────────────────────────────────────── */
+/*Forms*/
 .formContainer {
     background: #fff;
     border: 1px solid #ddd;
@@ -57,15 +57,26 @@ body {
     display: block;
 }
 
-
-/* ── Error message ───────────────────────────────────── */
+/*Errors*/
 .error {
     color: #b00020;
     font-size: 0.875rem;
     margin-bottom: 12px;
 }
 
-/* ── Footer ──────────────────────────────────────────── */
+/*Nav*/
+nav {
+    background-color: #2e2e52;
+    padding: 10px 24px;
+    display: flex;
+    gap: 24px;
+}
+
+nav a:hover {
+    color: #fff;
+}
+
+/*Footer*/
 footer {
     background-color: #519872;
     color: #BEC5AD;

@@ -12,6 +12,20 @@
             <h2>Jonathan Freed</h2>
         </div>
 
+        {% if loggedIn %}
+        <header>
+            <nav>
+                <a href="/accounting?uname={{ user }}">Accounting</a>
+                <a href="/admin?uname={{ user }}">Admin</a>
+                <a href="/it_help?uname={{ user }}">IT</a>
+                <a href="/time_reporting?uname={{ user }}">Time Reporting</a>
+                <a href="/engineering?uname={{ user }}">Engineering</a>
+                <a href="/login?uname={{ user }}">Home</a>
+                <a href="/">Log out</a>
+            </nav>
+        </header>
+        {% endif %}
+
         <div id="content">
             <h2>{{ heading }}</h2>
             {% block content %}{% endblock %}
